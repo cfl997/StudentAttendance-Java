@@ -13,14 +13,14 @@ public class ArrayListStudent {
     }
 
     // 删除学生
-    public void deleteStudent(int id) {
-        students.removeIf(student -> student.getId() == id);
+    public void deleteStudent(String attendanceId) {
+        students.removeIf(student -> student.getAttendanceId().equals(attendanceId));
     }
 
     // 修改学生信息
-    public void updateStudent(int id, Student newStudent) {
+    public void updateStudent(String attendanceId, Student newStudent) {
         for (int i = 0; i < students.size(); i++) {
-            if (students.get(i).getId() == id) {
+            if (students.get(i).getAttendanceId().equals(attendanceId)) {
                 students.set(i, newStudent);
                 return;
             }
@@ -28,9 +28,9 @@ public class ArrayListStudent {
     }
 
     // 查询学生信息
-    public Student searchStudentById(int id) {
+    public Student searchStudentByAttendanceId(String attendanceId) {
         for (Student student : students) {
-            if (student.getId() == id) {
+            if (student.getAttendanceId().equals(attendanceId)) {
                 return student;
             }
         }

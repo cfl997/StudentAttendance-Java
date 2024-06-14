@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class Main extends JFrame {
+public class Main extends JFrame implements StudentListener {
     private AttendanceManager attendanceManager = new AttendanceManager();
     private ArrayListStudent studentManager = new ArrayListStudent();
     
     private JTable table;
     private DefaultTableModel tableModel;
     
-    private static InputStudent m_inputStudentui=new InputStudent();
+    private InputStudent inputStudentUI;
 
     public Main() {
         setTitle("学生考勤管理系统");
@@ -57,6 +57,10 @@ public class Main extends JFrame {
 
         panel.add(buttonPanel, BorderLayout.SOUTH);
         add(panel);
+
+        // Initialize InputStudent UI
+        inputStudentUI = new InputStudent();
+        inputStudentUI.setStudentListener(this);  // Set Main as the listener
 
         // 事件处理
         addButton.addActionListener(new ActionListener() {
@@ -173,8 +177,8 @@ public class Main extends JFrame {
     }
 
     private void addStudent() {
-        // TODO: 实现添加学生的界面和功能
-        studentManager.addStudent(new Student(1, "John Doe", "Computer Science"));
+        // Show the InputStudent UI when adding a student
+        inputStudentUI.setVisible(true);
     }
 
     private void viewStudents() {
@@ -197,14 +201,20 @@ public class Main extends JFrame {
         }
     }
 
+    @Override
+    public void studentAdded(Student student) {
+        // Add the student to the student manager
+        studentManager.addStudent(student);
+        System.out.println("Student added: " + student);
+        // Optionally, update any UI components or logs if needed
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new Main().setVisible(true);
-                m_inputStudentui.setVisible(true);
             }
         });
     }
 }
-
